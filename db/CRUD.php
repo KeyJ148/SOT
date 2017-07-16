@@ -7,7 +7,6 @@ class CRUD{
     public static function create($table, $column_array, $values_array){
         if (count($column_array) != count($values_array)){
             throw new DBException("[CRUD::create] column_array != values_array");
-            exit;
         }
 
         $column_string = "";
@@ -53,7 +52,6 @@ class CRUD{
     public static function update($table, $set_column_array, $set_values_array, $condition_column_array = [], $condition_values_array = []){
         if (count($condition_column_array) != count($condition_values_array) || count($set_column_array) != count($set_values_array)){
             throw new DBException("[CRUD::update] column_array != values_array");
-            exit;
         }
 
         $set = "";
@@ -80,7 +78,6 @@ class CRUD{
     public static function delete($table, $column_array = [], $values_array = []){
         if (count($column_array) != count($values_array)){
             throw new DBException("[CRUD::delete] column_array != values_array");
-            exit;
         }
 
         $condition = "";

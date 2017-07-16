@@ -18,7 +18,6 @@ class DB {
 
         if (!self::$instance){
             throw new DBException("Error in connecting to MySQL.");
-            exit;
         }
 
         return self::$instance;
