@@ -8,6 +8,9 @@ class CRUD{
         if (count($column_array) != count($values_array)){
             throw new DBException("[CRUD::create] column_array != values_array");
         }
+        if (count(column_array) == 0 || count(values_array) == 0){
+            throw new DBException("[CRUD::create] column_array=0 || values_array=0");
+        }
 
         $column_string = "";
         for ($i = 0; $i < count($column_array); $i++){
@@ -52,6 +55,9 @@ class CRUD{
     public static function update($table, $set_column_array, $set_values_array, $condition_column_array = [], $condition_values_array = []){
         if (count($condition_column_array) != count($condition_values_array) || count($set_column_array) != count($set_values_array)){
             throw new DBException("[CRUD::update] column_array != values_array");
+        }
+        if (count($set_column_array) == 0 || count($set_values_array) == 0){
+            throw new DBException("[CRUD::update] set_column_array=0 || set_values_array=0");
         }
 
         $set = "";
