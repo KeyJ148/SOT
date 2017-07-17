@@ -7,8 +7,6 @@ class DB {
     private static $_USER = "root";
     private static $_PASS = "123456";
 
-    private static $_LOGGING = false;
-
     private static $instance;
 
     public static function connect(){
@@ -31,6 +29,11 @@ class DB {
             throw new DBException("Error in query: $query");
         }
 
-        return $result;
+        if (is_bool($result)) return $result;
+        else return mysqli_fetch_assoc($result);
+    }
+
+    public static function get_last_id(){
+        return mysqli_insert_id(self::$instance);
     }
 }

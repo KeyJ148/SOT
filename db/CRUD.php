@@ -4,12 +4,9 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/db/DB.php";
 
 class CRUD{
 
-    public static function create($table, $column_array, $values_array){
+    public static function create($table, $column_array = [], $values_array = []){
         if (count($column_array) != count($values_array)){
             throw new DBException("[CRUD::create] column_array != values_array");
-        }
-        if (count($column_array) == 0 || count($values_array) == 0){
-            throw new DBException("[CRUD::create] column_array=0 || values_array=0");
         }
 
         $column_string = "";
@@ -29,7 +26,8 @@ class CRUD{
         }
 
         $query = "INSERT INTO $table ($column_string) values($values_string)";
-        return DB::query($query);
+        DB::query($query);
+        return DB::get_last_id();
     }
 
     public static function read($table, $column_array = [], $values_array = []){
@@ -62,7 +60,10 @@ class CRUD{
 
         $set = "";
         for ($i = 0; $i < count($set_column_array); $i++){
-            $set .= $set_column_array[$i] . "="."'$set_values_array[$i]'";
+            $set .= $set_column_array[$i] . "=";
+            if (isset($set_values_array[$i])) $set .= "'$set_values_array[$i]'";
+            else $set .= "NULL";
+
             if ($i != count($set_column_array)-1) $set .= ", ";
         }
 
@@ -77,7 +78,6 @@ class CRUD{
             $query .= " WHERE " . $condition;
         }
 
-        echo $query;
         return DB::query($query);
     }
 
@@ -102,6 +102,11 @@ class CRUD{
 
     public static function read_by_id($table, $id){
         $query = "SELECT * FROM $table WHERE id='$id' LIMIT 1";
+        return DB::query($query);
+    }
+
+    public static function delete_by_id($table, $id){
+        $query = "DELETE FROM $table WHERE id='$id' LIMIT 1";
         return DB::query($query);
     }
 }
