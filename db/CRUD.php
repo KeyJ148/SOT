@@ -8,7 +8,7 @@ class CRUD{
         if (count($column_array) != count($values_array)){
             throw new DBException("[CRUD::create] column_array != values_array");
         }
-        if (count(column_array) == 0 || count(values_array) == 0){
+        if (count($column_array) == 0 || count($values_array) == 0){
             throw new DBException("[CRUD::create] column_array=0 || values_array=0");
         }
 
@@ -101,6 +101,7 @@ class CRUD{
     }
 
     public static function read_by_id($table, $id){
-        return self::read($table, ['id'], [$id]);
+        $query = "SELECT * FROM $table WHERE id='$id' LIMIT 1";
+        return DB::query($query);
     }
 }

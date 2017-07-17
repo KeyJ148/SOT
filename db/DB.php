@@ -27,9 +27,6 @@ class DB {
         self::connect();
         $result = mysqli_query(self::$instance, $query);
 
-        if (self::$_LOGGING){
-            syslog(LOG_DEBUG, "QUERY [$result]: $query");
-        }
         if (!$result){
             throw new DBException("Error in query: $query");
         }
