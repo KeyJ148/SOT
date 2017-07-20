@@ -4,6 +4,8 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/db/CRUD.php";
 
 trait ORM {
 
+    public $db_id;
+
     //Возвращает новый объект этого класса с уже присвоеным id
     public static function create(){
         $name = get_called_class();
