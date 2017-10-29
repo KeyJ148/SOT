@@ -6,7 +6,7 @@ class M_Auth extends Method {
         return array('login', 'password');
     }
 
-    public function setPerson(){
+    public function setGameCharacter(){
         return true;
     }
 
@@ -27,11 +27,14 @@ class M_Auth extends Method {
             return;
         }
 
-        $token = $this->getSault(64);
-        $person->db_token_api = $token;
-        $person->save();
-
-        $this->answer->set('token', $token);
+        $gameCharactersFilter = new ORM_GameCharacter();
+        $gameCharactersFilter->db_person_id = $person->db_id;
+        $gameCharacters = $gameCharactersFilter->loadAll();
+        for ($i=0; $i<count($gameCharacters); $i++){
+            $gameCharacters[$i]->db_token = $this->getSault(64);
+            $gameCharacters[$i]->save();
+            $this->answer->set('token_' . $i, $gameCharacters[$i]->db_token);
+        }
     }
 
     private function getSault($length = 32){

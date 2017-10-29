@@ -12,7 +12,10 @@ class Answer{
     public $browser = false; //Вывод в браузер? (меняет \n на <br>)
 
     public function display(){
-        $fullAnswer = $this->error . Answer::SEPARATOR . Errors::getText($this->error) . Answer::SEPARATOR . $this->getAnswerFormating();
+        $fullAnswer = $this->error . Answer::SEPARATOR
+                      . Errors::getText($this->error) . Answer::SEPARATOR
+                      . count($this->answers) . Answer::SEPARATOR
+                      . $this->getAnswerFormating();
 
         if ($this->browser) $fullAnswer = str_replace(Answer::SEPARATOR, Answer::SEPARATOR_BROWSER, $fullAnswer);
         echo $fullAnswer;

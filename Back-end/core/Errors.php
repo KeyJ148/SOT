@@ -12,7 +12,7 @@ class Errors{
 
     public static function getText($error){
         switch ($error){
-            case Errors::NOT_ERROR: return "Ошибок нет";
+            case Errors::NOT_ERROR: return "ОК";
             case Errors::NOT_VALID_TOKEN: return "Не валидный токен";
             case Errors::AUTH: return "Неверный логин или пароль";
             case Errors::METHOD_EMPTY: return "Не был передан метод";

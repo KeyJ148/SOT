@@ -3,6 +3,7 @@
 abstract class Method {
 
     public $person;//Содержит ORM объект пользователя, вызвавшего метод
+    public $game_character;//Содержит ORM объект игрового персонажа, вызвавшего метод
     public $answer;//Содержит ответ на вызов метода
 
     public function __construct($answer){
@@ -25,16 +26,18 @@ abstract class Method {
         return true;
     }
 
-    //Ищет в БД пользователя с переданным токеном и устанавливает в person, возвращает false в случае неудачи
-    public function setPerson(){
+    //Ищет в БД персонажа с переданным токеном и устанавливает в player_character и person, возвращает false в случае неудачи
+    public function setGameCharacter(){
         if (!isset($_GET['token']) || empty($_GET['token'])) return false;
         $token = $_GET['token'];
 
-        $this->person = new ORM_Person();
-        $this->person->db_token_api = $token;
-
+        $this->game_character = new ORM_GameCharacter();
+        $this->game_character->db_token = $token;
         //Внимание! Загружает без учета регистра, поэтому требуется дополнительное сравнение
-        return ($this->person->load() && $token === $this->person->db_token_api);
+        if (!$this->game_character->load() || $token !== $this->game_character->db_token) return false;
+
+        $this->person = ORM_Person::load_by_id($this->game_character->db_person_id);
+        return true;
     }
 
 }

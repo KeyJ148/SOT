@@ -26,7 +26,7 @@ class Router{
             return;
         }
 
-        if (!$method->setPerson()){
+        if (!$method->setGameCharacter()){
             $this->answer->error = Errors::NOT_VALID_TOKEN;
             return;
         }
