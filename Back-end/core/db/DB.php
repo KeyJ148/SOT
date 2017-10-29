@@ -2,16 +2,11 @@
 
 class DB {
 
-    private static $_HOST = "localhost";
-    private static $_NAME = "wikisot";
-    private static $_USER = "root";
-    private static $_PASS = "123456";
-
     private static $instance;
 
     public static function connect(){
         if (!isset(self::$instance) || !self::$instance) {
-            self::$instance = new mysqli(self::$_HOST, self::$_USER, self::$_PASS, self::$_NAME);
+            self::$instance = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME);
         }
 
         if (!self::$instance){
@@ -29,8 +24,7 @@ class DB {
             throw new DBException("Error in query: $query");
         }
 
-        if (is_bool($result)) return $result;
-        else return mysqli_fetch_assoc($result);
+        return $result;
     }
 
     public static function get_last_id(){
