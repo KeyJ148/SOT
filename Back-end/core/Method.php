@@ -20,7 +20,7 @@ abstract class Method {
     public function have_parameters(){
         $array = $this->get_need_parameters();
         foreach ($array as $parameter){
-            if (!isset($_GET[$parameter]) || empty($_GET[$parameter])) return false;
+            if (!isset($_GET[$parameter])) return false;
         }
 
         return true;
